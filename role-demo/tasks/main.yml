@@ -1,0 +1,7 @@
+---
+- name: Configure a Logging Banner
+  iosxr_banner:
+    banner:  login
+    text: "{{ login_cisco }}"
+    state: present
+  #when: ansible_net_system == "iosxr"

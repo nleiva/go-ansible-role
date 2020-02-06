@@ -1,0 +1,4 @@
+---
+- name: Go role test
+  go-ansible-role:
+    name: Ansible

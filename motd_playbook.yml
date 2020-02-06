@@ -1,0 +1,55 @@
+---
+# YAML documents begin with the document separator ---
+ 
+# The minus in YAML this indicates a list item.  The playbook contains a list
+# of plays, with each play being a dictionary
+-
+ 
+  # Target: where our play will run and options it will run with
+  hosts: routers
+ 
+  # Variable: variables that will apply to the play, on all target systems
+  vars:
+    motd_cisco: "Welcome to NCS5501 - Ansible generated MOTD\n"
+    motd_ubuntu: "Welcome to Ubuntu Linux - Moorestown Telemetry\n"
+ 
+  # Task: the list of tasks that will be executed within the playbook
+  tasks:
+    - name: Gather IOS XR facts
+      iosxr_facts:
+        # gather_subset: all
+        gather_subset: hardware
+
+    - name: Enable NETCONF service on port 830
+      iosxr_netconf:
+        listens_on: 830
+        state: present
+
+    - name: Configure a MOTD (message of the day)
+      iosxr_banner:
+        banner:  motd
+        text: "{{ motd_cisco }}"
+        state: present
+      notify: MOTD changed
+      #when: ansible_net_system == "iosxr"
+
+    - name: Configure a MOTD (message of the day)
+      copy:
+        content: "{{ motd_ubuntu }}"
+        dest: /etc/motd
+      notify: MOTD changed
+      when: ansible_distribution == "Ubuntu"
+ 
+  # Handlers: handlers that are executed as a notify key from a task
+  handlers:
+    - name: MOTD changed
+      debug:
+        msg: The MOTD was changed
+ 
+  # Roles: list of roles to be imported into the play
+  roles:
+    - role-demo
+    - go-role
+
+# Three dots indicate the end of a YAML document
+...
