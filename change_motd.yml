@@ -1,0 +1,36 @@
+---
+
+-
+  hosts: infrastructure
+ 
+  tasks: 
+    - name: Configure a MOTD (message of the day)
+      iosxr_banner:
+        banner:  motd
+        text: "Welcome to {{ ansible_net_hostname }}"
+        state: present
+      notify: MOTD changed
+      when: ansible_net_system == "iosxr"
+
+    - name: Configure a MOTD (message of the day)
+      nxos_banner:
+        banner:  motd
+        text: "Welcome to {{ ansible_net_hostname }}"
+        state: present
+      notify: MOTD changed
+      when: ansible_net_system == "nxos"
+
+    - name: Configure a MOTD (message of the day)
+      ios_banner:
+        banner:  motd
+        text: "Welcome to {{ ansible_net_hostname }}"
+        state: present
+      notify: MOTD changed
+      when: ansible_net_system == "ios"
+
+  handlers:
+    - name: MOTD changed
+      debug:
+        msg: The MOTD was changed on {{ ansible_net_hostname }}
+
+...

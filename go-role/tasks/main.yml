@@ -2,3 +2,4 @@
 - name: Go role test
   go-ansible-role:
     name: Ansible
+    run_once: true

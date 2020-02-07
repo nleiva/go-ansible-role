@@ -1,0 +1,33 @@
+---
+
+-
+  # Target: where our play will run and options it will run with
+  hosts: infrastructure
+ 
+  # Task: the list of tasks that will be executed within the playbook
+  tasks:
+    - name: VIEW ALL ANSIBLE FACT KEYS
+      debug:
+        var: ansible_facts.keys()
+
+    - name: VIEW HOSTNAME
+      debug:
+        var: ansible_net_hostname
+    
+    - name: VIEW MODEL
+      debug:
+        var: ansible_net_model
+
+    - name: VIEW OS VERSION
+      debug:
+        var: ansible_net_version
+    
+    - name: VIEW System
+      debug:
+        var: ansible_net_system
+
+  roles:
+    # - role-demo
+    - go-role
+
+...

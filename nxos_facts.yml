@@ -1,0 +1,22 @@
+---
+
+-
+  # Target: where our play will run and options it will run with
+  hosts: nxos
+  gather_facts: no
+
+  # Task: the list of tasks that will be executed within the playbook
+  tasks:
+    - name: RETRIEVE ANSIBLE FACTS
+      nxos_facts:
+        gather_subset: all
+
+    - name: VIEW HOSTNAME
+      debug:
+        var: ansible_net_hostname
+
+    - name: VIEW OS VERSION
+      debug:
+        var: ansible_net_version
+
+...
